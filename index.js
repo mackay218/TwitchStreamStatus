@@ -56,7 +56,7 @@ $(document).ready(function(){
           channel.setAttribute("id", info.display_name);
           channel.setAttribute("class", "channel offline")
 
-          status.textContent = "STREAM: offline"
+          status.textContent = "STREAM: Offline"
 
           link.appendChild(logo);
           link.appendChild(name);
@@ -102,6 +102,10 @@ $(document).ready(function(){
     $("#all").click(function(){
       console.log(all);
 
+      $("#all").addClass("selected");
+      $("#online").removeClass("selected");
+      $("#offline").removeClass("selected");
+
       $("#streamListWrapper").empty();
 
       for(i = 0; i < all.length; i++){
@@ -112,6 +116,11 @@ $(document).ready(function(){
 
     //show only online streams
     $("#online").click(function(){
+
+      $("#all").removeClass("selected");
+      $("#online").addClass("selected");
+      $("#offline").removeClass("selected");
+
       $("#streamListWrapper").empty();
       console.log(online);
 
@@ -123,6 +132,10 @@ $(document).ready(function(){
 
     //show only offline streams
     $("#offline").click(function(){
+      $("#all").removeClass("selected");
+      $("#online").removeClass("selected");
+      $("#offline").addClass("selected");
+
       $("#streamListWrapper").empty();
       console.log(offline)
 
