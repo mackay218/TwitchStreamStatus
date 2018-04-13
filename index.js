@@ -1,102 +1,134 @@
 $(document).ready(function(){
 
+  $("#streamListContainer").focus();
+
+  var id = "";
   var channelArray = [];
+  channelArray = ["freecodecamp", "esl_sc2", "OgamingSC2", "cretetion",
+                  "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
+
+  var offline = [];
+  var online = [];
+  var all = [];
 
   var i = "";
 
-  channelArray = ["freecodecamp", "esl_sc2"];
-
   for(i = 0; i < channelArray.length; i++){
+
+    var channelURL = "https://wind-bow.glitch.me/twitch-api/channels/"
+                      + channelArray[i] + "?callback=?"
+
     //get channel info
-    var status = "";
-    var streamName = "";
-    var logoURL = "";
-    var linkURL = "";
-    var game = "";
-    var video = "";
-    var channel = "";
-    var channelName = "";
-    var link = "";
-    var logo = "";
-    var image = "";
-    var stream = "";
+    $.getJSON(channelURL, function(info){
 
-    var name = channelArray[i];
-
-    var streamURL = "https://wind-bow.glitch.me/twitch-api/streams/"+ channelArray[i] + "?callback=?"
-    console.log(streamURL);
-    //get channel info
-    $.getJSON("https://wind-bow.glitch.me/twitch-api/channels/" + channelArray[i] + "?callback=?"
-              , function(info){
-                streamName = info.display_name;
-                //console.log(streamName);
-                logoURL = info.logo;
-                //console.log(logoURL);
-                linkURL = info.url;
-                //console.log(linkURL);
-
-                //create channel div
-                channel = document.createElement("div");
-                channel.setAttribute("class", "channel");
-                channel.setAttribute("id", streamName);
-
-                //add channel to wrapper
-                streamListWrapper.appendChild(channel);
-
-                //create link
-                link = document.createElement("a");
-                link.setAttribute("class", "link");
-                link.setAttribute("href", linkURL);
-
-                //create logo div
-                logo = document.createElement("div");
-                logo.setAttribute("class", "logo");
-
-                image = "background-image: url(" + logoURL + ")"
-
-                logo.setAttribute("style", image);
-
-                //channel name
-                channelName = document.createElement("h3");
-                channelName.textContent = streamName;
-                //add logo and channel name
-                link.appendChild(logo);
-                link.appendChild(channelName);
-
-                //add link to channel
-                channel = document.getElementById(streamName);
-                channel.appendChild(link);
-              });
-
-    //add stream status to channel
-    $.getJSON(streamURL, function(response){
-
-      stream = document.createElement("p");
+      var name = info.display_name;
 
 
-      if(response.stream == null){
-        console.log("offline");
-        stream.textContent = "stream: offline";
+      var streamURL = "https://wind-bow.glitch.me/twitch-api/streams/"+ name + "?callback=?"
 
-        channel = document.getElementById(streamName);
-        channel.appendChild(stream);
+      //get channel stream status
+      $.getJSON(streamURL, function(response){
 
-      }
-      else{
-        console.log(response.stream);
-        game = response.stream.channel.game + ": ";
-        video = response.stream.channel.status;
+        //create channel div
+        var channel = document.createElement("div");
 
-        stream.textContent = "stream: " + game + video;
+        //create link anchor
+        var link = document.createElement("a");
+        link.setAttribute("href", info.url);
+        link.setAttribute("class", "link")
 
-        channel = document.getElementById(streamName);
-        channel.appendChild(stream);
+        //create Channel Name div
+        var name = document.createElement("h3");
+        name.textContent = info.display_name;
 
-      }
+        //create logo div
+        var logo = document.createElement("div");
+        logo.setAttribute("class", "logo");
+        var image = "background-image: url(" + info.logo + ");"
+        logo.setAttribute("style", image);
 
+        //create status paragraph
+        var status = document.createElement("p");
+
+        //if not streaming
+        if(response.stream == null){
+
+          channel.setAttribute("id", info.display_name);
+          channel.setAttribute("class", "channel offline")
+
+          status.textContent = "STREAM: offline"
+
+          link.appendChild(logo);
+          link.appendChild(name);
+          channel.appendChild(link);
+          channel.appendChild(status);
+
+          offline.push(channel);
+          all.push(channel);
+        }
+
+        //else if streaming
+        else{
+          game = response.stream.channel.game + ": ";
+          video = response.stream.channel.status;
+
+          channel.setAttribute("id", info.display_name);
+          channel.setAttribute("class", "channel online");
+
+          status.textContent = "STREAM: " + game + video;
+
+          link.appendChild(logo);
+          link.appendChild(name);
+          channel.appendChild(link);
+          channel.appendChild(status);
+
+          online.push(channel);
+          all.push(channel);
+        }
+
+
+        var list = document.getElementById("streamListWrapper");
+        list.appendChild(channel);
+
+      });
     });
 
   }
+    console.log(offline, online);
 
+    var list = "";
 
+    //show all streams
+    $("#all").click(function(){
+      console.log(all);
+
+      $("#streamListWrapper").empty();
+
+      for(i = 0; i < all.length; i++){
+        list = document.getElementById("streamListWrapper");
+        list.appendChild(all[i]);
+      }
+    });
+
+    //show only online streams
+    $("#online").click(function(){
+      $("#streamListWrapper").empty();
+      console.log(online);
+
+      for(i = 0; i < online.length; i++){
+        list = document.getElementById("streamListWrapper");
+        list.appendChild(online[i]);
+      }
+    });
+
+    //show only offline streams
+    $("#offline").click(function(){
+      $("#streamListWrapper").empty();
+      console.log(offline)
+
+      for(i = 0; i < offline.length; i++){
+        list = document.getElementById("streamListWrapper");
+        list.appendChild(offline[i]);
+      }
+    });
 });
