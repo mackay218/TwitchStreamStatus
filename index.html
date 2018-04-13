@@ -6,25 +6,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Twitch Stream Status Viewer</title>
 
+  <!--favicon-->
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="favicon/apple-touch-icon-57x57.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="favicon/apple-touch-icon-114x114.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="favicon/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="favicon/apple-touch-icon-144x144.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="60x60" href="favicon/apple-touch-icon-60x60.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="favicon/apple-touch-icon-120x120.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="76x76" href="favicon/apple-touch-icon-76x76.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="favicon/apple-touch-icon-152x152.png" />
+  <link rel="icon" type="image/png" href="favicon/favicon-196x196.png" sizes="196x196" />
+  <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/png" href="favicon/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="favicon/favicon-16x16.png" sizes="16x16" />
+  <link rel="icon" type="image/png" href="favicon/favicon-128.png" sizes="128x128" />
+  <meta name="application-name" content="&nbsp;"/>
+  <meta name="msapplication-TileColor" content="#FFFFFF" />
+  <meta name="msapplication-TileImage" content="mstile-144x144.png" />
+  <meta name="msapplication-square70x70logo" content="mstile-70x70.png" />
+  <meta name="msapplication-square150x150logo" content="mstile-150x150.png" />
+  <meta name="msapplication-wide310x150logo" content="mstile-310x150.png" />
+  <meta name="msapplication-square310x310logo" content="mstile-310x310.png" />
+
   <!--styles-->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <!-- DMlogo -->
+  <link rel="stylesheet" href="styles/icomoon/icon.css">
   <!--fonts-->
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,500,700" rel="stylesheet">
 </head>
 <body>
   <div class="header">
-    <img class="headerImg" alt="twitch streams" src="twitchStreams.svg">
+    <img class="headerImg" alt="twitch streams" src="styles/twitchStreams.svg">
   </div>
-  <div id="buttonContainer" class="buttons">
+  <div id="buttonContainer" class="buttonContainer">
     <div id="all" class="button selected">All</div>
     <div id="online" class="button">Online</div>
     <div id="offline" class="button">Offline</div>
   </div>
   <div id="streamListContainer" class="container">
-    <div id="streamListWrapper" class="wrapper">
-
-    </div>
+    <div id="streamListWrapper" class="wrapper"></div>
   </div>
+  <div id = "signature">
+  <a class = "portfolioLink" target = "_blank" href = "https://mackay2588.github.io">
+    <p >by Daniel MacKay</p>
+    <div class = "icon-dmLogo5px heroLogo portfolioLink"></div>
+  </a>
+</div>
   <!-- jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!--local scripts-->

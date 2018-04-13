@@ -35,7 +35,9 @@ $(document).ready(function(){
         //create link anchor
         var link = document.createElement("a");
         link.setAttribute("href", info.url);
-        link.setAttribute("class", "link")
+        link.setAttribute("target", "_blank");
+        link.setAttribute("class", "link");
+
 
         //create Channel Name div
         var name = document.createElement("h3");
