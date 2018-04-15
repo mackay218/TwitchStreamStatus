@@ -20,12 +20,11 @@ $(document).ready(function(){
     }
   }
 
-
-
-
   var offline = [];
   var online = [];
   var all = [];
+
+  var allR = [];
 
   var i = "";
 
@@ -86,6 +85,7 @@ $(document).ready(function(){
             channel.appendChild(status);
 
             offline.push(channel);
+
             all.push(channel);
           }
 
@@ -117,9 +117,6 @@ $(document).ready(function(){
 
     }
   }
-
-
-    console.log(offline, online);
 
     var list = "";
 
@@ -188,16 +185,17 @@ $(document).ready(function(){
         addChannelTl.add(TweenLite.from("#addStream", 0.2, {opacity: 0, width: 0}));
         addChannelTl.add(TweenLite.from("#addButton", 0.2, {opacity: 0, width: 0}), "-=0.2");
         addChannelTl.add(TweenLite.from("#notValidAlert", 0.1, {width: 0}));
+        addChannelTl.add(TweenLite.to("#plusButton", 0.2, {rotation: 45}), "-=0.9");
 
-    $("#plusButton").click(function(){
-      addChannelTl.play();
-      $("#formClose").attr("style", "opacity: 1; transition: 0.5s;");
-    });
+        addChannelTl.reversed(true);
 
-    $("#formClose").click(function(){
-      addChannelTl.reverse();
-      $("#formClose").attr("style", "opacity: 0;");
-    })
+      $("#plusButton").click(function(){
+        loadChannels();
+        removeTl.reverse();
+
+        addChannelTl.reversed() ? addChannelTl.play() : addChannelTl.reverse();
+
+      });
 
 
     $("#addButton").click(function(){
@@ -238,7 +236,76 @@ $(document).ready(function(){
 
       });
 
+
+    });
 /*************************************************************************/
+
+/*********remove channel function******************/
+
+    var removeTl = new TimelineLite({paused: true});
+
+      removeTl.add(TweenLite.to("#minusButton", 0.2, {rotation: 45}));
+
+      removeTl.reversed(true);
+
+    $("#minusButton").click(function(){
+      addChannelTl.reverse();
+
+      $("#minus").toggleClass("fa-minus");
+      $("#minus").toggleClass("fa-plus");
+
+      var currentChannels = document.getElementsByClassName("channel");
+
+      //add remove button
+      for(i = 0; i < currentChannels.length; i++){
+
+        var x = document.createElement("span");
+        x.setAttribute("class", "fas fa-plus x");
+
+        var removeBtn = document.createElement("div");
+        removeBtn.setAttribute("class", "removeBtn");
+
+        removeBtn.appendChild(x);
+
+        var chnl = currentChannels[i];
+        chnl.appendChild(removeBtn);
+      }
+
+
+      //add shake animation
+      $(".channel:nth-child(odd)").toggleClass("shake");
+      $(".channel:nth-child(even)").toggleClass("shake2");
+
+      //toggle remove function
+      removeTl.reversed() ? removeTl.play() : removeTl.reverse();
+
+      //remove channel
+      $(".removeBtn").click(function(){
+        //remove removeBtn's
+        
+        //get correct channel to remove
+        parentChannel = this.parentNode;
+        $(parentChannel).addClass("remove");
+
+        channelID = this.parentNode.id;
+
+        //iterate over channelArray
+        for(i = 0; i < channelArray.length; i++){
+            //get index of channel to remove
+            var chnl = channelArray[i];
+            if(chnl == channelID){
+              var index = i;
+              //remove channel from channelArray
+              channelArray.splice(index, 1);
+            }
+        }
+
+
+
+        $(".channel:nth-child(odd)").toggleClass("shake");
+        $(".channel:nth-child(even)").toggleClass("shake2");
+      });
+
     });
 
 });

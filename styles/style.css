@@ -68,7 +68,6 @@ body{
   z-index: 4;
 }
 
-
 .plusButton{
   background: radial-gradient(#23ea23, #008000);
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
@@ -85,18 +84,6 @@ body{
   justify-content: center;
   align-items: center;
   z-index: 4;
-}
-
-.formClose{
-  grid-row: 1/2;
-  grid-column: 3/4;
-  position: absolute;
-  top: 1vw;
-  right: 1vw;
-  transform: rotate(45deg);
-  opacity: 0;
-  transition: 0.5s;
-  z-index: 5;
 }
 
 .notValidAlert{
@@ -258,7 +245,7 @@ body{
     grid-column: 2/3;
     position: absolute;
     top: 2vh;
-    left: 20vw;
+    left: 15vw;
     width: 35vw;
   }
 
@@ -271,7 +258,7 @@ body{
 
   .addButton{
     position: absolute;
-    left: 26vw;
+    left: 20vw;
     height: 10vh;
     width: 25vw;
     font-size: 7vh;
@@ -428,7 +415,6 @@ body{
   }
 }
 
-
 .link{
   grid-row: 1/2;
   grid-column: 1/2;
@@ -441,7 +427,6 @@ body{
   grid: auto / auto auto;
   grid-column-gap: 5vw;
 }
-
 
 @media only screen and (orientation: portrait){
   .link {
@@ -515,6 +500,39 @@ body{
   }
 }
 
+/* remove button */
+
+
+
+.removeBtn{
+  grid-row: 1/2;
+  grid-column: 2/3;
+  position: absolute;
+  right: 1vw;
+  top: 1vh;
+  height: 8vh;
+  width: 8vh;
+  border: 2px solid red;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.x{
+  color: red;
+  transform: rotate(45deg);
+  font-size: 5vh;
+}
+
+.remove{
+  height: 0;
+  width: 0;
+  opacity: 0;
+  transition: 0.1s;
+}
+
+/*signature*/
 @media only screen and (orientation: portrait){
   .sigContainer{
     position: absolute;
@@ -567,8 +585,8 @@ body{
 
 
 @keyframes twitch{
-  from, to {        }
-  5%, 6% { transform: rotate(5deg) skewY(-5deg); }
+  from, to {}
+  5%, 6% { transform: rotate(5deg) skewY(-5deg);}
   6%, 7% { transform: none;}
   8%, 88% {transform: none;}
   89%, 90% {transform: rotate(-5deg) skewY(5deg);}
@@ -578,3 +596,22 @@ body{
 .headerImg{animation: twitch 5s infinite;}
 
 .portfolioLink{animation: twitch 5s infinite;}
+
+@keyframes shake{
+  from, to {}
+  0%, 25% { transform: rotate(0.06deg);}
+  25%, 50% { transform: rotate(-0.12deg);}
+  50%, 75% { transform: rotate(-0.06deg);}
+  75%, 100% { transform: rotate(0.12deg);}
+}
+
+@keyframes shake2{
+  from, to {}
+  0%, 25% { transform: rotate(-0.06deg);}
+  25%, 50% { transform: rotate(0.12deg);}
+  50%, 75% { transform: rotate(0.06deg);}
+  75%, 100% { transform: rotate(-0.12deg);}
+}
+.shake{animation: shake 0.5s infinite;}
+
+.shake2{animation: shake2 0.5s infinite;}
