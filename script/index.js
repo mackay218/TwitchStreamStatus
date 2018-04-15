@@ -3,9 +3,25 @@ $(document).ready(function(){
   $("#streamListContainer").focus();
 
   var id = "";
+
   var channelArray = [];
-  channelArray = ["freecodecamp", "esl_sc2", "OgamingSC2", "cretetion",
-                  "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
+
+  //check for localStorage
+  if(typeof(localStorage) !== "undefined"){
+    //get stored channelArray if any exists
+    channelArray = JSON.parse(localStorage.getItem("channelArray"));
+    if(channelArray != null){
+      channelArray = channelArray;
+    }
+    //use default channelArray
+    else{
+      channelArray = ["freecodecamp", "esl_sc2", "OgamingSC2", "cretetion",
+                      "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
+    }
+  }
+
+
+
 
   var offline = [];
   var online = [];
@@ -175,7 +191,7 @@ $(document).ready(function(){
 
     $("#plusButton").click(function(){
       addChannelTl.play();
-      $("#formClose").attr("style", "opacity: 1;");
+      $("#formClose").attr("style", "opacity: 1; transition: 0.5s;");
     });
 
     $("#formClose").click(function(){
@@ -206,11 +222,15 @@ $(document).ready(function(){
 
 
           //check if channel is already in channelArray
+          //add channel if it's not already in channelArray
           if(channelArray.includes(input) == false){
             channelArray.unshift(input);
             console.log(channelArray);
             $("#streamListWrapper").empty();
 
+            //store channelArray in localStorage
+            localStorage.setItem("channelArray", JSON.stringify(channelArray));
+            //localStorage.setItem("channelArray", channelArray);
             loadChannels();
           }
 
