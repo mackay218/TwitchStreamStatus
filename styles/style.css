@@ -338,7 +338,7 @@ body{
   background-position: center;
   background-size: contain;
   background-color: #929ED7;
-  box-shadow: inset 0 0 50vw rgba(0,0,0,0.5), -2px 5px 10px rgba(0,0,0,0.5);
+  box-shadow: -2px 5px 10px rgba(0,0,0,0.5);
   z-index: 2;
 }
 
@@ -347,7 +347,9 @@ body{
   top: 0;
   left: 0;
   height: auto;
-  min-height: 50vh;
+  min-height: 60vh;
+  background: linear-gradient(to right, rgba(0,0,0,0.5),
+              transparent, transparent, transparent, rgba(0,0,0,0.5));
   width: 100%;
   display: flex;
   flex-direction: column;
