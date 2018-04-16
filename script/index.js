@@ -218,11 +218,11 @@ $(document).ready(function(){
           $(window).on("orientationchange", function(event){
             if(window.innerWidth > window.innerHeight){
               $("#addStream").attr("style","width: 50vw;");
-              $("#addButton").attr("style","width: 25vw; height: 5vh; opacity: 1;")
+              $("#addButton").attr("style","width: 25vw; height: 10vh; opacity: 1;")
             }
             else if(window.innerHeight > window.innerWidth){
               $("#addStream").attr("style","width: 35vw;");
-              $("#addButton").attr("style","width: 25vw; height: 10vh; opacity: 1;")
+              $("#addButton").attr("style","width: 25vw; height: 5vh; opacity: 1;")
             }
           });
         }
