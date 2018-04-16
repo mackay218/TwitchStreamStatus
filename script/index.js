@@ -301,10 +301,17 @@ $(document).ready(function(){
       $(".removeBtn").toggleClass("hideRemoveBtn");
       $(".removeBtn").toggleClass("showRemoveBtn");
 
-      //add shake animation
-      $(".channel:nth-child(odd)").toggleClass("shake");
-      $(".channel:nth-child(even)").toggleClass("shake2");
+      if(minusBtnCounter % 2 == 1){
+        //add shake animation
+        $(".channel:nth-child(odd)").toggleClass("shake");
+        $(".channel:nth-child(even)").toggleClass("shake2");
+      }
+      else if(minusBtnCounter % 2 == 0){
+        $(".channel").removeClass("shake");
+        $(".channel").removeClass("shake2");
+      }
 
+      minusBtnCounter += 1;
       //toggle remove function
       removeTl.reversed() ? removeTl.play() : removeTl.reverse();
 
@@ -313,14 +320,11 @@ $(document).ready(function(){
         //get correct channel to remove
         parentChannel = this.parentNode;
         channelID = this.parentNode.id;
-        console.log(channelID);
 
         parentChannel.remove();
 
-        console.log(channelArray, 2);
         //get stored channelArray
         channelArray = JSON.parse(localStorage.getItem("channelArray"));
-        console.log(channelArray, 3)
 
         var placeHolderArray = [];
 
@@ -337,7 +341,6 @@ $(document).ready(function(){
 
         //get stored channelArray
         channelArray = JSON.parse(localStorage.getItem("channelArray"));
-
 
       });
     });
