@@ -189,24 +189,48 @@ $(document).ready(function(){
         if(window.innerWidth > window.innerHeight){
           addChannelTl.add(TweenLite.to("#addChannelForm", 0.2, {width: "85vw"}));
           addChannelTl.add(TweenLite.to("#formInput", 0.2, {opacity: 1, width: "60vw"}));
+          addChannelTl.add(TweenLite.to("#addStream", 0.2, {opacity: 1, width: "35vw"}));
+          addChannelTl.add(TweenLite.to("#addButton", 0.2, {opacity: 1, width: "25vw", height: "10vh"}), "-=0.2");
         }
         if(window.innerHeight > window.innerWidth){
           addChannelTl.add(TweenLite.to("#addChannelForm", 0.2, {width: "85vw"}));
           addChannelTl.add(TweenLite.to("#formInput", 0.2, {opacity: 1, width: "60vw"}));
+          addChannelTl.add(TweenLite.to("#addStream", 0.2, {opacity: 1, width: "50vw"}));
+          addChannelTl.add(TweenLite.to("#addButton", 0.2, {opacity: 1, width: "25vw", height: "5vh"}), "-=0.2");
         }
 
-        addChannelTl.add(TweenLite.from("#addStream", 0.2, {opacity: 0, width: 0}));
-        addChannelTl.add(TweenLite.from("#addButton", 0.2, {opacity: 0, width: 0}), "-=0.2");
         addChannelTl.add(TweenLite.from("#notValidAlert", 0.1, {width: 0}));
         addChannelTl.add(TweenLite.to("#plusButton", 0.2, {rotation: 45}), "-=0.9");
 
         addChannelTl.reversed(true);
+
+      var plusBtnCounter = 0;
 
       //open add channel form
       $("#plusButton").click(function(){
         removeTl.reverse();
 
         addChannelTl.reversed() ? addChannelTl.play() : addChannelTl.reverse();
+
+        plusBtnCounter += 1;
+
+        if(plusBtnCounter % 2 == 1){
+          $(window).on("orientationchange", function(event){
+            if(window.innerWidth > window.innerHeight){
+              $("#addStream").attr("style","width: 50vw;");
+              $("#addButton").attr("style","width: 25vw; height: 5vh; opacity: 1;")
+            }
+            else if(window.innerHeight > window.innerWidth){
+              $("#addStream").attr("style","width: 35vw;");
+              $("#addButton").attr("style","width: 25vw; height: 10vh; opacity: 1;")
+            }
+          });
+        }
+        else{
+          $("#addStream").attr("style","width: 0;");
+          $("#addButton").attr("style","width: 0; height: 0; opacity: 0;")
+        }
+
 
       });
 

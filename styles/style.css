@@ -6,6 +6,7 @@ body{
   margin: 0;
   padding: 0;
   height: 100vh;
+  width: 100vw;
   background-color: #CACFE3;
   box-shadow: inset 5vw 0 10vw -5vw rgba(0,0,0,0.2),
               inset -5vw 0 10vw -5vw rgba(0,0,0,0.2);
@@ -166,6 +167,7 @@ body{
 .formInput{
   grid-row: 2/3;
   grid-column: 2/3;
+  width: 0;
   outline: none;
   border: 2px solid #fff;
   border-radius: 20px;
@@ -186,6 +188,7 @@ body{
 .addButton{
   grid-row: 3/4;
   grid-column: 2/3;
+  width: 0;
   background-color: #6441A4;
   border-top: 2px solid rgba(255,255,255,0.5);
   border-right: 2px solid rgba(255,255,255,0.5);
@@ -194,6 +197,7 @@ body{
   color: #fff;
   text-align: center;
   font-family: 'Source Code Pro', monospace, sans-serif;
+  opacity: 0;
 }
 
 .addButton:hover{
@@ -203,17 +207,17 @@ body{
 
 @media only screen and (orientation: portrait) {
   .addChannelForm{
-    position: fixed;
+    position: absolute;
     top: 20vh;
   }
 
   .addStream{
     grid-row: 1/2;
     grid-column: 2/3;
+    width: 0;
     position: absolute;
     top: 3vh;
     right: 10vw;
-    width: 50vw;
   }
 
   .formInput{
@@ -226,8 +230,6 @@ body{
   .addButton{
     position: absolute;
     left: 20vw;
-    height: 5vh;
-    width: 25vw;
     font-size: 4vh;
     transition: 0.2s;
   }
@@ -236,17 +238,17 @@ body{
 
 @media only screen and (orientation: landscape){
   .addChannelForm{
-    position: fixed;
+    position: absolute;
     top: 18vh;
   }
 
   .addStream{
     grid-row: 1/2;
     grid-column: 2/3;
+    width: 0;
     position: absolute;
     top: 2vh;
     left: 15vw;
-    width: 35vw;
   }
 
   .formInput{
@@ -259,8 +261,6 @@ body{
   .addButton{
     position: absolute;
     left: 20vw;
-    height: 10vh;
-    width: 25vw;
     font-size: 7vh;
   }
 
@@ -314,14 +314,14 @@ body{
   }
 
   .container{
-    position: fixed;
+    position: absolute;
     top: 20vh;
   }
 }
 
 @media only screen and (orientation: landscape){
   .container{
-    position: fixed;
+    position: absolute;
     top: 18vh;
   }
 }
@@ -330,6 +330,7 @@ body{
   width: 85vw;
   height: 60vh;
   margin-left: 10vw;
+  margin-right: 5vw;
   margin-top: 10px;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -350,7 +351,7 @@ body{
   min-height: 60vh;
   background: linear-gradient(to right, rgba(0,0,0,0.5),
               transparent, transparent, transparent, rgba(0,0,0,0.5));
-  width: 100%;
+  width: 85vw;
   display: flex;
   flex-direction: column;
 }
@@ -563,7 +564,7 @@ body{
 @media only screen and (orientation: portrait){
   .sigContainer{
     position: absolute;
-    bottom: 4vh;
+    bottom: 2vh;
     height: auto;
     width: 100vw;
     display: flex;
