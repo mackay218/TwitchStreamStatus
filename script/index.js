@@ -8,16 +8,28 @@ $(document).ready(function(){
 
   //check for localStorage
   if(typeof(localStorage) !== "undefined"){
+
+    //set up channelArray
     //get stored channelArray if any exists
     channelArray = JSON.parse(localStorage.getItem("channelArray"));
-    if(channelArray != null){
-      channelArray = channelArray;
-    }
-    //use default channelArray
-    else{
+    console.log(channelArray);
+    if(channelArray == null){
+      //use default channelArray
       channelArray = ["freecodecamp", "esl_sc2", "OgamingSC2", "cretetion",
                       "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
     }
+    else if(channelArray != null){
+      //check if array is empty
+      if(channelArray.length == false){
+        //use default channelArray
+        channelArray = ["freecodecamp", "esl_sc2", "OgamingSC2", "cretetion",
+                        "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
+      }
+      else{
+        channelArray = channelArray;
+      }
+    }
+
   }
 
   var offline = [];
@@ -71,6 +83,16 @@ $(document).ready(function(){
           //create status paragraph
           var status = document.createElement("p");
 
+
+          //create remove button
+          var x = document.createElement("span");
+          x.setAttribute("class", "fas fa-plus x");
+
+          var removeBtn = document.createElement("div");
+          removeBtn.setAttribute("class", "removeBtn hideRemoveBtn");
+
+          removeBtn.appendChild(x);
+
           //if not streaming
           if(response.stream == null){
 
@@ -83,7 +105,7 @@ $(document).ready(function(){
             link.appendChild(name);
             channel.appendChild(link);
             channel.appendChild(status);
-
+            channel.appendChild(removeBtn);
             offline.push(channel);
 
             all.push(channel);
@@ -103,7 +125,7 @@ $(document).ready(function(){
             link.appendChild(name);
             channel.appendChild(link);
             channel.appendChild(status);
-
+            channel.appendChild(removeBtn);
             online.push(channel);
             all.push(channel);
           }
@@ -190,7 +212,6 @@ $(document).ready(function(){
         addChannelTl.reversed(true);
 
       $("#plusButton").click(function(){
-        loadChannels();
         removeTl.reverse();
 
         addChannelTl.reversed() ? addChannelTl.play() : addChannelTl.reverse();
@@ -228,7 +249,6 @@ $(document).ready(function(){
 
             //store channelArray in localStorage
             localStorage.setItem("channelArray", JSON.stringify(channelArray));
-            //localStorage.setItem("channelArray", channelArray);
             loadChannels();
           }
 
@@ -248,29 +268,16 @@ $(document).ready(function(){
 
       removeTl.reversed(true);
 
+      var minusBtnCounter = 1;
+
     $("#minusButton").click(function(){
       addChannelTl.reverse();
 
       $("#minus").toggleClass("fa-minus");
       $("#minus").toggleClass("fa-plus");
-
-      var currentChannels = document.getElementsByClassName("channel");
-
-      //add remove button
-      for(i = 0; i < currentChannels.length; i++){
-
-        var x = document.createElement("span");
-        x.setAttribute("class", "fas fa-plus x");
-
-        var removeBtn = document.createElement("div");
-        removeBtn.setAttribute("class", "removeBtn");
-
-        removeBtn.appendChild(x);
-
-        var chnl = currentChannels[i];
-        chnl.appendChild(removeBtn);
-      }
-
+      //show removeBtn
+      $(".removeBtn").toggleClass("hideRemoveBtn");
+      $(".removeBtn").toggleClass("showRemoveBtn");
 
       //add shake animation
       $(".channel:nth-child(odd)").toggleClass("shake");
@@ -281,29 +288,34 @@ $(document).ready(function(){
 
       //remove channel
       $(".removeBtn").click(function(){
-        //remove removeBtn's
-        
         //get correct channel to remove
         parentChannel = this.parentNode;
-        $(parentChannel).addClass("remove");
-
         channelID = this.parentNode.id;
+        console.log(channelID);
 
-        //iterate over channelArray
-        for(i = 0; i < channelArray.length; i++){
-            //get index of channel to remove
-            var chnl = channelArray[i];
-            if(chnl == channelID){
-              var index = i;
-              //remove channel from channelArray
-              channelArray.splice(index, 1);
-            }
+        parentChannel.remove();
+
+        //reset channelArray
+
+        channelArray = [];
+        for(i = 0; i < all.length; i++){
+
+          var c = all[i].id;
+          if(c != channelID){
+            channelArray.push(c);
+          }
+          else{
+            continue;
+          }
         }
 
+        console.log(channelArray);
+        //store channelArray in localStorage
+        localStorage.setItem("channelArray", JSON.stringify(channelArray));
 
-
-        $(".channel:nth-child(odd)").toggleClass("shake");
-        $(".channel:nth-child(even)").toggleClass("shake2");
+        //get stored channelArray if any exists
+        channelArray = localStorage.getItem("channelArray");
+        console.log(channelArray);
       });
 
     });
