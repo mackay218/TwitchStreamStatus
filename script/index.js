@@ -147,12 +147,7 @@ $(document).ready(function(){
       $("#online").removeClass("selected");
       $("#offline").removeClass("selected");
 
-      $("#streamListWrapper").empty();
-
-      for(i = 0; i < all.length; i++){
-        list = document.getElementById("streamListWrapper");
-        list.appendChild(all[i]);
-      }
+      $(".channel").show();
     });
 
     //show only online streams
@@ -162,13 +157,11 @@ $(document).ready(function(){
       $("#online").addClass("selected");
       $("#offline").removeClass("selected");
 
-      $("#streamListWrapper").empty();
-      console.log(online);
 
-      for(i = 0; i < online.length; i++){
-        list = document.getElementById("streamListWrapper");
-        list.appendChild(online[i]);
-      }
+      console.log(online);
+      $(".online").show();
+      $(".offline").hide();
+
     });
 
     //show only offline streams
@@ -177,13 +170,11 @@ $(document).ready(function(){
       $("#online").removeClass("selected");
       $("#offline").addClass("selected");
 
-      $("#streamListWrapper").empty();
-      console.log(offline)
 
-      for(i = 0; i < offline.length; i++){
-        list = document.getElementById("streamListWrapper");
-        list.appendChild(offline[i]);
-      }
+      console.log(offline)
+      $(".online").hide();
+      $(".offline").show();
+
     });
 
 /********add channel function********************/
