@@ -114,6 +114,9 @@ $(document).ready(function(){
           else{
             game = response.stream.channel.game + ": ";
             video = response.stream.channel.status;
+            if(video.length > 60){
+              video = video.slice(0, 59) + "...";
+            }
 
             channel.setAttribute("id", (info.display_name).toLowerCase());
             channel.setAttribute("class", "channel online");
@@ -241,6 +244,41 @@ $(document).ready(function(){
             }
           }
         });
+      });
+      $("#formInput").keypress(function(event){
+        if(event.which == 13){
+          var input = (document.getElementById("formInput").value).toLowerCase();
+
+          var channelURL = "https://wind-bow.glitch.me/twitch-api/channels/"
+                            + input + "?callback=?"
+
+          $.getJSON(channelURL, function(result){
+            if(result.error){
+              //show alert
+              $("#notValidAlert").attr("style", "opacity: 1");
+            }
+            else{
+              //close form
+              addChannelTl.reverse();
+              //hide alert
+              $("#notValidAlert").attr("style", "opacity: 0");
+              $("#formClose").attr("style", "opacity: 0;");
+              $("#formInput").val("");
+
+              //check if channel is already in channelArray
+              //add channel if it's not already in channelArray
+              if(channelArray.includes(input) == false){
+                channelArray.unshift(input);
+                console.log(channelArray);
+                $("#streamListWrapper").empty();
+
+                //store channelArray in localStorage
+                localStorage.setItem("channelArray", JSON.stringify(channelArray));
+                loadChannels();
+              }
+            }
+          });
+        }
       });
 /*************************************************************************/
 
