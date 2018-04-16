@@ -15,15 +15,19 @@ $(document).ready(function(){
     console.log(channelArray);
     if(channelArray == null){
       //use default channelArray
-      channelArray = ["freecodecamp", "esl_sc2", "OgamingSC2", "cretetion",
-                      "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
+      channelArray = ["freecodecamp", "esl_sc2", "ogamingsc2", "cretetion",
+                      "storbeck", "habathcx", "robotcaleb", "noobs2ninjas"];
+      //store channelArray in localStorage
+      localStorage.setItem("channelArray", JSON.stringify(channelArray));
     }
     else if(channelArray != null){
       //check if array is empty
       if(channelArray.length == false){
         //use default channelArray
-        channelArray = ["freecodecamp", "esl_sc2", "OgamingSC2", "cretetion",
-                        "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
+        channelArray = ["freecodecamp", "esl_sc2", "ogamingsc2", "cretetion",
+                        "storbeck", "habathcx", "robotcaleb", "noobs2ninjas"];
+        //store channelArray in localStorage
+        localStorage.setItem("channelArray", JSON.stringify(channelArray));
       }
       else{
         channelArray = channelArray;
@@ -69,7 +73,6 @@ $(document).ready(function(){
           link.setAttribute("target", "_blank");
           link.setAttribute("class", "link");
 
-
           //create Channel Name div
           var name = document.createElement("h3");
           name.textContent = info.display_name;
@@ -83,7 +86,6 @@ $(document).ready(function(){
           //create status paragraph
           var status = document.createElement("p");
 
-
           //create remove button
           var x = document.createElement("span");
           x.setAttribute("class", "fas fa-plus x");
@@ -96,7 +98,7 @@ $(document).ready(function(){
           //if not streaming
           if(response.stream == null){
 
-            channel.setAttribute("id", info.display_name);
+            channel.setAttribute("id", (info.display_name).toLowerCase());
             channel.setAttribute("class", "channel offline")
 
             status.textContent = "STREAM: Offline"
@@ -116,7 +118,7 @@ $(document).ready(function(){
             game = response.stream.channel.game + ": ";
             video = response.stream.channel.status;
 
-            channel.setAttribute("id", info.display_name);
+            channel.setAttribute("id", (info.display_name).toLowerCase());
             channel.setAttribute("class", "channel online");
 
             status.textContent = "STREAM: " + game + video;
@@ -221,7 +223,7 @@ $(document).ready(function(){
 
     $("#addButton").click(function(){
 
-      var input = document.getElementById("formInput").value;
+      var input = (document.getElementById("formInput").value).toLowerCase();
 
       var channelURL = "https://wind-bow.glitch.me/twitch-api/channels/"
                         + input + "?callback=?"
@@ -239,7 +241,6 @@ $(document).ready(function(){
           $("#formClose").attr("style", "opacity: 0;");
           $("#formInput").val("");
 
-
           //check if channel is already in channelArray
           //add channel if it's not already in channelArray
           if(channelArray.includes(input) == false){
@@ -251,12 +252,8 @@ $(document).ready(function(){
             localStorage.setItem("channelArray", JSON.stringify(channelArray));
             loadChannels();
           }
-
         }
-
       });
-
-
     });
 /*************************************************************************/
 
@@ -295,27 +292,28 @@ $(document).ready(function(){
 
         parentChannel.remove();
 
-        //reset channelArray
+        console.log(channelArray, 2);
+        //get stored channelArray
+        channelArray = JSON.parse(localStorage.getItem("channelArray"));
+        console.log(channelArray, 3)
 
-        channelArray = [];
-        for(i = 0; i < all.length; i++){
+        var placeHolderArray = [];
 
-          var c = all[i].id;
+        for(i = 0; i < channelArray.length; i++){
+          var c = channelArray[i];
           if(c != channelID){
-            channelArray.push(c);
-          }
-          else{
-            continue;
+            placeHolderArray.push(c);
           }
         }
-
-        console.log(channelArray);
+        channelArray = placeHolderArray;
+        console.log(channelArray, 4)
         //store channelArray in localStorage
         localStorage.setItem("channelArray", JSON.stringify(channelArray));
 
-        //get stored channelArray if any exists
-        channelArray = localStorage.getItem("channelArray");
-        console.log(channelArray);
+        //get stored channelArray
+        channelArray = JSON.parse(localStorage.getItem("channelArray"));
+        console.log(channelArray, 5);
+
       });
 
     });
