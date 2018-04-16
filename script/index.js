@@ -12,7 +12,7 @@ $(document).ready(function(){
     //set up channelArray
     //get stored channelArray if any exists
     channelArray = JSON.parse(localStorage.getItem("channelArray"));
-    console.log(channelArray);
+
     if(channelArray == null){
       //use default channelArray
       channelArray = ["freecodecamp", "esl_sc2", "ogamingsc2", "cretetion",
@@ -30,17 +30,15 @@ $(document).ready(function(){
         localStorage.setItem("channelArray", JSON.stringify(channelArray));
       }
       else{
+        //use array from local storage
         channelArray = channelArray;
       }
     }
-
   }
 
   var offline = [];
   var online = [];
   var all = [];
-
-  var allR = [];
 
   var i = "";
 
@@ -57,7 +55,6 @@ $(document).ready(function(){
       $.getJSON(channelURL, function(info){
 
         var name = info.display_name;
-
 
         var streamURL = "https://wind-bow.glitch.me/twitch-api/streams/"+ name + "?callback=?"
 
@@ -132,13 +129,11 @@ $(document).ready(function(){
             all.push(channel);
           }
 
-
           var list = document.getElementById("streamListWrapper");
           list.appendChild(channel);
 
         });
       });
-
     }
   }
 
@@ -213,6 +208,7 @@ $(document).ready(function(){
 
         addChannelTl.reversed(true);
 
+      //open add channel form
       $("#plusButton").click(function(){
         removeTl.reverse();
 
@@ -220,41 +216,41 @@ $(document).ready(function(){
 
       });
 
+      //add channel function
+      $("#addButton").click(function(){
 
-    $("#addButton").click(function(){
+        var input = (document.getElementById("formInput").value).toLowerCase();
 
-      var input = (document.getElementById("formInput").value).toLowerCase();
+        var channelURL = "https://wind-bow.glitch.me/twitch-api/channels/"
+                          + input + "?callback=?"
 
-      var channelURL = "https://wind-bow.glitch.me/twitch-api/channels/"
-                        + input + "?callback=?"
-
-      $.getJSON(channelURL, function(result){
-        if(result.error){
-          //show alert
-          $("#notValidAlert").attr("style", "opacity: 1");
-        }
-        else{
-          //close form
-          addChannelTl.reverse();
-          //hide alert
-          $("#notValidAlert").attr("style", "opacity: 0");
-          $("#formClose").attr("style", "opacity: 0;");
-          $("#formInput").val("");
-
-          //check if channel is already in channelArray
-          //add channel if it's not already in channelArray
-          if(channelArray.includes(input) == false){
-            channelArray.unshift(input);
-            console.log(channelArray);
-            $("#streamListWrapper").empty();
-
-            //store channelArray in localStorage
-            localStorage.setItem("channelArray", JSON.stringify(channelArray));
-            loadChannels();
+        $.getJSON(channelURL, function(result){
+          if(result.error){
+            //show alert
+            $("#notValidAlert").attr("style", "opacity: 1");
           }
-        }
+          else{
+            //close form
+            addChannelTl.reverse();
+            //hide alert
+            $("#notValidAlert").attr("style", "opacity: 0");
+            $("#formClose").attr("style", "opacity: 0;");
+            $("#formInput").val("");
+
+            //check if channel is already in channelArray
+            //add channel if it's not already in channelArray
+            if(channelArray.includes(input) == false){
+              channelArray.unshift(input);
+              console.log(channelArray);
+              $("#streamListWrapper").empty();
+
+              //store channelArray in localStorage
+              localStorage.setItem("channelArray", JSON.stringify(channelArray));
+              loadChannels();
+            }
+          }
+        });
       });
-    });
 /*************************************************************************/
 
 /*********remove channel function******************/
@@ -306,16 +302,14 @@ $(document).ready(function(){
           }
         }
         channelArray = placeHolderArray;
-        console.log(channelArray, 4)
+
         //store channelArray in localStorage
         localStorage.setItem("channelArray", JSON.stringify(channelArray));
 
         //get stored channelArray
         channelArray = JSON.parse(localStorage.getItem("channelArray"));
-        console.log(channelArray, 5);
+
 
       });
-
     });
-
 });
