@@ -563,8 +563,6 @@ body{
 /*signature*/
 @media only screen and (orientation: portrait){
   .sigContainer{
-    position: absolute;
-    bottom: 2vh;
     height: auto;
     width: 100vw;
     display: flex;
