@@ -352,3 +352,15 @@ $(document).ready(function(){
       });
     });
 });
+
+
+$(window).on("orientationchange", function(){
+  setTimeout(function(){
+    if(window.innerWidth > window.innerHeight){
+      $(".headerImg").attr("style", "width: 90vw");
+    }
+    if(window.innerHeight > window.innerWidth){
+      $(".headerImg").attr("style", "width: 90vw");
+    }
+  },0.5)
+});
